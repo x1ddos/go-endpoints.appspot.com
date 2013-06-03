@@ -1,3 +1,10 @@
+# go-endpoints.appspot.com
+
+A test app for go-endpoints that runs live on https://go-endpoints.appspot.com
+
+More info on Cloud Endpoints for Go is available here:
+https://github.com/crhym3/go-endpoints
+
 Copy this dir on your local harddrive and run the dev server:
 
 `APPENGINE_GO_SDK/dev_appserver.py ./go-endpoints.appspot.com`
