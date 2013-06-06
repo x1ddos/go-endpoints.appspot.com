@@ -4,14 +4,21 @@ import (
 	"net/http"
 	"time"
 
-	"appengine"
 	"appengine/datastore"
-	"appengine/user"
 
 	"github.com/crhym3/go-endpoints/endpoints"
 )
 
-var authScope = "https://www.googleapis.com/auth/userinfo.email"
+const clientId = "YOUR-CLIENT-ID"
+
+var (
+	scopes = []string{
+		endpoints.EmailScope,
+		"https://www.googleapis.com/auth/userinfo.profile",
+	}
+	clientIds = []string{clientId, endpoints.ApiExplorerClientId}
+	audiences = []string{clientId}
+)
 
 // Greeting is a datastore entity that represents a single greeting.
 // It also serves as (part of) a response of GreetingService.
@@ -37,10 +44,10 @@ type GreetingsList struct {
 func (gs *GreetingService) List(
 	r *http.Request, _ *endpoints.VoidMessage, resp *GreetingsList) error {
 
-	ctx := appengine.NewContext(r)
+	c := endpoints.NewContext(r)
 	q := datastore.NewQuery("Greeting").Order("-Date").Limit(10)
 	greets := make([]*Greeting, 0, 10)
-	keys, err := q.GetAll(ctx, &greets)
+	keys, err := q.GetAll(c, &greets)
 	if err != nil {
 		return err
 	}
@@ -62,20 +69,20 @@ type NewGreet struct {
 func (gs *GreetingService) Sign(
 	r *http.Request, req *NewGreet, greet *Greeting) error {
 
-	ctx := appengine.NewContext(r)
+	c := endpoints.NewContext(r)
 
 	greet.Content = req.Message
 	greet.Date = time.Now()
 
-	// Most likely, this is not currently supported, yet.
-	if u, err := user.CurrentOAuth(ctx, authScope); err == nil {
-		greet.Author = u.String()
+	user, err := endpoints.CurrentUser(c, scopes, audiences, clientIds)
+	if err == nil {
+		greet.Author = user.String()
 	} else {
-		greet.Author = "Anonymous User"
+		greet.Author = "Anonymous User (" + err.Error() + ")"
 	}
 
 	key, err := datastore.Put(
-		ctx, datastore.NewIncompleteKey(ctx, "Greeting", nil), greet)
+		c, datastore.NewIncompleteKey(c, "Greeting", nil), greet)
 	if err != nil {
 		return err
 	}
@@ -93,18 +100,18 @@ type GreetIdReq struct {
 func (gs *GreetingService) Delete(
 	r *http.Request, req *GreetIdReq, _ *endpoints.VoidMessage) error {
 
-	ctx := appengine.NewContext(r)
+	c := endpoints.NewContext(r)
 	key, err := datastore.DecodeKey(req.Id)
 	if err != nil {
 		return err
 	}
-	return datastore.Delete(ctx, key)
+	return datastore.Delete(c, key)
 }
 
 // TestMessageGet is here just to test various field types
 type TestMessageGet struct {
 	A int   `endpoints:"required"`
-	B int32 `endopints:"100"`                // default
+	B int32 `endopints:"100"`                               // default
 	C int64 `json:",string" endpoints:",This is a C field"` // description
 	D float32
 	E float64
@@ -155,11 +162,11 @@ func (gs *GreetingService) EchoPost(
 	return nil
 }
 
-func init() {
+func registerGuestbookApi() (*endpoints.RpcService, error) {
 	greetService := &GreetingService{}
 	rpcService, err := endpoints.RegisterServiceWithDefaults(greetService)
 	if err != nil {
-		panic(err.Error())
+		return nil, err
 	}
 	rpcService.Info().Name = "greeting"
 
@@ -170,7 +177,9 @@ func init() {
 	info = rpcService.MethodByName("Sign").Info()
 	info.Name, info.HttpMethod, info.Path, info.Desc =
 		"greets.sign", "POST", "greetings", "Sign the guestbook."
-	info.Scopes = []string{authScope}
+	info.Scopes = scopes
+	info.Audiences = audiences
+	info.ClientIds = clientIds
 
 	info = rpcService.MethodByName("Delete").Info()
 	info.Name, info.HttpMethod, info.Path, info.Desc =
@@ -189,5 +198,5 @@ func init() {
 	info.Name, info.HttpMethod, info.Path =
 		"tests.echoPost", "POST", "tests/echo"
 
-	endpoints.HandleHttp()
+	return rpcService, nil
 }

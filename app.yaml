@@ -6,9 +6,21 @@ runtime: go
 api_version: go1
 
 handlers:
+# static assets
+- url: /favicon\.ico
+  static_files: static/favicon.ico
+  upload: favicon\.ico
+  mime_type: image/png
+- url: /(js|css|images)/(.+)
+  static_files: static/\1/\2
+  upload: static/(js|css|images)/.*
+- url: /tictactoe
+  static_files: templates/tictactoe.html
+  upload: templates/tictactoe\.html
+# Go app
 - url: /.*
   secure: always
   script: _go_app
-
+# Endpoints handler
 - url: /_ah/spi/.*
   script: _go_app
