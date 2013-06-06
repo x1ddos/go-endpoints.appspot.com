@@ -12,7 +12,7 @@ const (
 	apiExplorerUrl = "https://developers.google.com/apis-explorer/"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func homeHandler(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles(filepath.Join("templates", "home.html"))
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -40,8 +40,4 @@ func getScheme(r *http.Request) string {
 		}
 	}
 	return scheme
-}
-
-func init() {
-	http.HandleFunc("/", handler)
 }
