@@ -17,6 +17,7 @@ handlers:
 - url: /tictactoe
   static_files: templates/tictactoe.html
   upload: templates/tictactoe\.html
+  secure: always
 # Go app
 - url: /.*
   secure: always

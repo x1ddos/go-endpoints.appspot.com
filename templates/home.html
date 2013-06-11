@@ -1,25 +1,45 @@
 <!doctype html>
 <html>
-  <head><title>Go Endpoints</title></head>
+  <head>
+    <title>Go Endpoints</title>
+    <link rel="stylesheet" href="/css/base.css">
+    {{"<!--[if lt IE 9]>"|safe}}
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    {{"<![endif]-->"|safe}}
+  </head>
   <body>
-    <h1>Go Endpoints</h1>
-    <p>Hello, gopher! Try this:</p>
+    <header>
+      <a href="https://github.com/crhym3/go-endpoints" target="_blank" class="fork">
+        <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+             alt="Fork me on GitHub">
+      </a>
+      <h1>Go Endpoints</h1>
+      <p>Hello, gopher!</p>
 
-    <ul>
-      <li><a href="/_ah/api/discovery/v1/apis" target="_blank">
-        /_ah/api/discovery/v1/apis
-      </a></li>
-      <li><a href="/_ah/api/discovery/v1/apis/greeting/v1/rest" target="_blank">
-        /_ah/api/discovery/v1/apis/greeting/v1/rest
-      </a></li>
-    </ul>
-    <iframe src="{{.ApiExplorerUrl}}?base={{.BaseUrl}}/_ah/api#p/greeting/v1/"
-            style="width: 100%; height: 600px; border: none;"></iframe>
- 
-    <hr/>
-    Source code:
-    <a href="https://github.com/crhym3/go-endpoints" target="_blank">
-      github.com/crhym3/go-endpoints
-    </a>
+      <ul>
+        <li><a href="/tictactoe">Play TicTacToe</a></li>
+        <li><a href="/_ah/api/explorer">Try API Explorer</a></li>
+      </ul>
+
+      <ul>
+        <li><a href="http://godoc.org/github.com/crhym3/go-endpoints/endpoints"
+               target="_blank">Package docs</a></li>
+        <li><a href="https://github.com/crhym3/go-endpoints/wiki"
+               target="_blank">More docs</a></li>
+      </ul>
+    </header>
+
+    {{.Readme}}
+
+    <script>
+      var pres = document.getElementsByTagName("pre");
+      for (var i=0, pre; pre=pres[i]; i++) {
+        if (pre.firstChild.tagName == "CODE") {
+          pre.className = "prettyprint";
+          pre.firstChild.className = 'language-' + pre.firstChild.className;
+        }
+      };
+    </script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true&amp;skin=sunburst&amp;lang=yaml"></script>
   </body>
 </html>
