@@ -1,0 +1,40 @@
+{$define "title"$}Guestbook - Go Endpoints{$end$}
+
+{$define "body"$}
+<header><h1>Guestbook</h1></header>
+
+<div role="main" ng-controller="GreetingCtrl" ng-app="guestbook">
+
+  <div class="media">
+    <a ng-href="{{user.link}}" class="img" target="_blank" ng-show="user">
+      <img ng-src="{{user.picture}}" class="avatar">
+    </a>
+  
+    <div class="bd">
+      <span ng-show="user">{{user.given_name}} says:</span>
+      <form name="form" ng-submit="signGuestbook()">
+        <textarea ng-model="newgreet.content" required></textarea>
+        <p>
+          <button ng-show="!user" class="button green"
+                  ng-click="login()">Login</button>
+          <button type="submit" class="button white"
+                  ng-disabled="form.$invalid">Sign the guestbook</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="greet" ng-repeat="g in greetings">
+    <span class="title">On {{g.date|date:'medium'}} {{g.author}} wrote:</span>
+    <div ng-bind="g.content"></div>
+  </div>
+</div>
+
+<script>
+  var CLIENT_ID = {$.ClientID$},
+      SCOPES = {$.Scopes$};
+</script>
+<script src="/js/angular.min.js"></script>
+<script src="/js/guestbook.js"></script>
+<script src="https://apis.google.com/js/auth.js?onload=onGoogClientLoaded"></script>
+{$end$}

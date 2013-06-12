@@ -1,45 +1,38 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Go Endpoints</title>
-    <link rel="stylesheet" href="/css/base.css">
-    {{"<!--[if lt IE 9]>"|safe}}
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    {{"<![endif]-->"|safe}}
-  </head>
-  <body>
-    <header>
-      <a href="https://github.com/crhym3/go-endpoints" target="_blank" class="fork">
-        <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-             alt="Fork me on GitHub">
-      </a>
-      <h1>Go Endpoints</h1>
-      <p>Hello, gopher!</p>
+{$define "title"$}Go Endpoints{$end$}
 
-      <ul>
-        <li><a href="/tictactoe">Play TicTacToe</a></li>
-        <li><a href="/_ah/api/explorer">Try API Explorer</a></li>
-      </ul>
+{$define "body"$}
+  <header>
+    <a href="https://github.com/crhym3/go-endpoints" target="_blank" class="fork">
+      <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+           alt="Fork me on GitHub">
+    </a>
+    <h1>Go Endpoints</h1>
+    <p>Hello, gopher!</p>
 
-      <ul>
-        <li><a href="http://godoc.org/github.com/crhym3/go-endpoints/endpoints"
-               target="_blank">Package docs</a></li>
-        <li><a href="https://github.com/crhym3/go-endpoints/wiki"
-               target="_blank">More docs</a></li>
-      </ul>
-    </header>
+    <ul>
+      <li><a href="/tictactoe">Play TicTacToe</a></li>
+      <li><a href="/guestbook">Sign the guestbook</a></li>
+      <li><a href="/_ah/api/explorer">Try API Explorer</a></li>
+    </ul>
 
-    {{.Readme}}
+    <ul>
+      <li><a href="http://godoc.org/github.com/crhym3/go-endpoints/endpoints"
+             target="_blank">Package docs</a></li>
+      <li><a href="https://github.com/crhym3/go-endpoints/wiki"
+             target="_blank">More docs</a></li>
+    </ul>
+  </header>
 
-    <script>
-      var pres = document.getElementsByTagName("pre");
-      for (var i=0, pre; pre=pres[i]; i++) {
-        if (pre.firstChild.tagName == "CODE") {
-          pre.className = "prettyprint";
-          pre.firstChild.className = 'language-' + pre.firstChild.className;
-        }
-      };
-    </script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true&amp;skin=sunburst&amp;lang=yaml"></script>
-  </body>
-</html>
+  {$.Readme$}
+
+  <script>
+    var pres = document.getElementsByTagName("pre");
+    for (var i=0, pre; pre=pres[i]; i++) {
+      if (pre.firstChild.tagName == "CODE") {
+        pre.className = "prettyprint";
+        pre.firstChild.className = 'language-' + pre.firstChild.className;
+      }
+    };
+  </script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true&amp;skin=sunburst&amp;lang=yaml"></script>
+{$end$}

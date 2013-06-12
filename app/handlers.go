@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"io/ioutil"
 	"time"
+	"strings"
 
 	"appengine"
 	"appengine/memcache"
@@ -22,6 +23,17 @@ var funcs = template.FuncMap{
 	"safe": func(html string) template.HTML {
 		return template.HTML(html)
 	},
+}
+
+func getTemplate(name string) (*template.Template, error) {
+	t, err := template.New("_base.html").Delims("{$", "$}").Funcs(funcs).
+	ParseFiles(
+		filepath.Join("templates", "_base.html"),
+		filepath.Join("templates", name))
+	if err != nil {
+		return nil, err
+	}
+	return t, nil
 }
 
 func getReadme(c appengine.Context) ([]byte, error) {
@@ -50,15 +62,6 @@ func getReadme(c appengine.Context) ([]byte, error) {
 	return readme, nil
 }
 
-func getTemplate(name string) (*template.Template, error) {
-	t, err := template.New(name).Funcs(funcs).ParseFiles(
-		filepath.Join("templates", name))
-	if err != nil {
-		return nil, err
-	}
-	return t, nil
-}
-
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	t, err := getTemplate("home.html")
 	if err != nil {
@@ -77,6 +80,24 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		Readme template.HTML
 	}{
 		Readme: template.HTML(readme),
+	}
+	if err := t.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+}
+
+func guestbookHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := getTemplate("guestbook.html")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	data := &struct{
+		ClientID, Scopes string
+	}{
+		ClientID: clientId,
+		Scopes: strings.Join(scopes, " "),
 	}
 	if err := t.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), 500)

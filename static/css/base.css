@@ -1,6 +1,7 @@
 body {
   max-width: 800px;
-  margin: 10px auto;  
+  padding: 0 10px;
+  margin: 0 auto;  
   font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -29,4 +30,130 @@ code:not([class]) {
   top: 0;
   right: 0;
   border: 0;
+}
+
+textarea {
+  margin: 5px 0 0 2px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  font-size: 120%;
+  width: 80%;
+  height: 100px;
+}
+
+.avatar {
+  width: 100px;
+  margin: 3px;
+  box-shadow: 0 0 3px #aaa;
+}
+
+.greet {
+  border-top: 1px solid #eee;
+  padding: 10px 0 10px;
+}
+
+.greet .title {
+  font-size: 80%;
+  color: #444;
+}
+
+.media {margin:10px;}
+.media, .bd {overflow:hidden; _overflow:visible; zoom:1;}
+.media .img {float:left; margin-right: 10px;}
+.media .img img{display:block;}
+.media .imgExt{float:right; margin-left: 10px;}
+
+.clearfix:after, .greet:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
+/*
+ * Simple Web Buttons
+ * http://www.lab.tommasoraspo.com/simple-web-buttoms/
+ *
+ * The CSS3 version of the Simple Web Buttoms designed
+ * by Orman Clark http://www.premiumpixels.com/
+ * Author: Raspo http://tommasoraspo.com/
+ * 
+ * HTML Markup required:
+ * A simple anchor with a class of 'button' and a second class to indicate
+ * the color
+ * 
+ * i.e. <a href="#" class="button blue"></a>
+ *
+ * 10 colors available: white, grey, pink, orange, green, blue, purple, teal,
+ * darkblue, black
+ *
+ */
+
+.button{
+    display: inline-block;
+    text-decoration: none;
+    font: bold 12px/12px HelveticaNeue, Arial;
+    padding: 8px 11px;
+    color: #555;
+    border: 1px solid #dedede;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.button[disabled] {
+  -webkit-box-shadow: none;
+  box-shadow: none !important;
+}
+
+.button.white{
+  background: #f5f5f5;
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f0f0f0');
+  background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f0f0f0));
+  background: gradient(linear, left top, left bottom, from(#f9f9f9), to(#f0f0f0));
+  border-color: #dedede #d8d8d8 #d3d3d3;
+  color: #555;
+  text-shadow: 0 1px 0 #fff;
+  -webkit-box-shadow: 0 1px 1px #eaeaea, inset 0 1px 0 #fbfbfb;
+  box-shadow: 0 1px 1px #eaeaea, inset 0 1px 0 #fbfbfb;
+}
+
+.button.white:not([disabled]):hover{
+  background: #f4f4f4;
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#efefef', endColorstr='#f8f8f8');
+  background: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#f8f8f8));
+  background: gradient(linear, left top, left bottom, from(#efefef), to(#f8f8f8));
+  border-color: #c7c7c7 #c3c3c3 #bebebe;
+  text-shadow: 0 1px 0 #fdfdfd;
+  -webkit-box-shadow: 0 1px 1px #ebebeb, inset 0 1px 0 #f3f3f3;
+  box-shadow: 0 1px 1px #ebebeb, inset 0 1px 0 #f3f3f3;
+}
+
+.button.white[disabled] {
+  color: #bbb;
+}
+
+.button.green{
+    background: #b7d770;
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#cae285', endColorstr='#9fcb57');
+    background: -webkit-gradient(linear, left top, left bottom, from(#cae285), to(#9fcb57));
+    background: gradient(linear, left top, left bottom, from(#cae285), to(#9fcb57));
+    border-color: #adc671 #98b65b #87aa4a;
+    color: #5d7731;
+    text-shadow: 0 1px 0 #cfe5a4;
+    -webkit-box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #d7e9a4;
+    box-shadow: 0 1px 1px #d3d3d3, inset 0 1px 0 #d7e9a4;    
+}
+
+.button.green:hover{
+    background: #b9d972;
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8d872', endColorstr='#b9d972');
+    background: -webkit-gradient(linear, left top, left bottom, from(#b8d872), to(#b9d972));
+    background: gradient(linear, left top, left bottom, from(#b8d872), to(#b9d972));
+    border-color: #8bb14d #83a648 #7d9e45;
+    text-shadow: 0 1px 0 #d5e8aa;
+    -webkit-box-shadow: 0 1px 1px #d5d5d5, inset 0 1px 0 #cae295;
+    box-shadow: 0 1px 1px #d5d5d5, inset 0 1px 0 #cae295;    
 }

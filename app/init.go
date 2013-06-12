@@ -9,6 +9,7 @@ import (
 
 func init() {
 	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/guestbook", guestbookHandler)
 
 	registerGuestbookApi()
 	tictactoe.RegisterService()
