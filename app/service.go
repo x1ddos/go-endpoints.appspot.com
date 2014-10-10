@@ -16,7 +16,7 @@ var (
 		endpoints.EmailScope,
 		"https://www.googleapis.com/auth/userinfo.profile",
 	}
-	clientIds = []string{clientId, endpoints.ApiExplorerClientId}
+	clientIds = []string{clientId, endpoints.APIExplorerClientID}
 	audiences = []string{clientId}
 )
 
@@ -60,7 +60,7 @@ func (gs *GreetingService) List(
 
 // NewGreet is the expected data structure for signing the guestbook.
 type NewGreet struct {
-	Message string `json:"message" endpoints:"required"`
+	Message string `json:"message" endpoints:"req"`
 }
 
 // Sign creates a new Greeting based on provided NewGreet.
@@ -93,7 +93,7 @@ func (gs *GreetingService) Sign(
 
 // GreetIdReq serves as a data structure for identifying a single Greeting.
 type GreetIdReq struct {
-	Id string `json:"id" endpoints:"required"`
+	Id string `json:"id" endpoints:"req"`
 }
 
 // Delete deletes a single greeting from the guesbook and replies with nothing.
@@ -110,7 +110,7 @@ func (gs *GreetingService) Delete(
 
 // TestMessageGet is here just to test various field types
 type TestMessageGet struct {
-	A int   `endpoints:"required"`
+	A int   `endpoints:"req"`
 	B int32 `endopints:"100"`                               // default
 	C int64 `json:",string" endpoints:",This is a C field"` // description
 	D float32
@@ -122,8 +122,8 @@ type TestMessageGet struct {
 
 // TestMessagePost is here just to test various field types
 type TestMessagePost struct {
-	A int   `endpoints:"required"`
-	B int32 `endopints:"100"`                // default
+	A int   `endpoints:"req"`
+	B int32 `endpoints:"d=100"`              // default
 	C int64 `endpoints:",This is a C field"` // description
 	D float32
 	E float64
@@ -162,7 +162,7 @@ func (gs *GreetingService) EchoPost(
 	return nil
 }
 
-func registerGuestbookApi() (*endpoints.RpcService, error) {
+func registerGuestbookApi() (*endpoints.RPCService, error) {
 	greetService := &GreetingService{}
 	rpcService, err := endpoints.RegisterServiceWithDefaults(greetService)
 	if err != nil {
@@ -171,32 +171,32 @@ func registerGuestbookApi() (*endpoints.RpcService, error) {
 	rpcService.Info().Name = "greeting"
 
 	info := rpcService.MethodByName("List").Info()
-	info.Name, info.HttpMethod, info.Path, info.Desc =
+	info.Name, info.HTTPMethod, info.Path, info.Desc =
 		"greets.list", "GET", "greetings", "List most recent greetings."
 
 	info = rpcService.MethodByName("Sign").Info()
-	info.Name, info.HttpMethod, info.Path, info.Desc =
+	info.Name, info.HTTPMethod, info.Path, info.Desc =
 		"greets.sign", "POST", "greetings", "Sign the guestbook."
 	info.Scopes = scopes
 	info.Audiences = audiences
 	info.ClientIds = clientIds
 
 	info = rpcService.MethodByName("Delete").Info()
-	info.Name, info.HttpMethod, info.Path, info.Desc =
+	info.Name, info.HTTPMethod, info.Path, info.Desc =
 		"greets.delete", "DELETE", "greetings/{id}", "Delete a single Greeting."
 
 	info = rpcService.MethodByName("EchoGet").Info()
-	info.Name, info.HttpMethod, info.Path =
+	info.Name, info.HTTPMethod, info.Path =
 		// These should match TestMessageGet field names
 		"tests.echoGet", "GET", "tests/echo/{A}/{B}/{C}/{D}/{E}/{F}/{G}"
 
 	info = rpcService.MethodByName("QueryEchoGet").Info()
-	info.Name, info.HttpMethod, info.Path =
+	info.Name, info.HTTPMethod, info.Path =
 		"tests.queryEchoGet", "GET", "tests/query"
 
 	info = rpcService.MethodByName("EchoPost").Info()
-	info.Name, info.HttpMethod, info.Path =
-		"tests.echoPost", "POST", "tests/echo"
+	info.Name, info.HTTPMethod, info.Path =
+		"tests.echoPost", "POST", "tests/echo/{B}"
 
 	return rpcService, nil
 }

@@ -14,5 +14,5 @@ func init() {
 	registerGuestbookApi()
 	tictactoe.RegisterService()
 
-	endpoints.HandleHttp()
+	endpoints.HandleHTTP()
 }
