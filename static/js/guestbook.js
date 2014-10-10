@@ -135,12 +135,12 @@
             immediate: immediate,
             response_type: 'token id_token'
           }, function(token){
-            authToken = token;
-            $log.debug('auth token:', authToken);
-            if (!authToken) {
+            $log.debug('gapi.auth.authorize:', token);
+            if (!token || token.error) {
               deferred.reject('auth with immediate=' + immediate + ' failed.');
             } else {
-              gapi.auth.setToken(authToken);
+              authToken = token;
+              gapi.auth.setToken(token);
               deferred.resolve(true);
             }
             $rootScope.$digest();
