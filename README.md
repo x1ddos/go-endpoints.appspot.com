@@ -5,9 +5,9 @@ A test app for go-endpoints that runs live on https://go-endpoints.appspot.com
 More info on Cloud Endpoints for Go is available here:
 https://github.com/crhym3/go-endpoints
 
-Copy this dir on your local harddrive and run the dev server:
+Clone this repo, change all the references to YOUR-CLIENT-ID with a real Client ID, and run the dev server:
 
-`APPENGINE_GO_SDK/dev_appserver.py ./go-endpoints.appspot.com`
+`goapp serve`
 
 It's a simple guestbook app taken from https://developers.google.com/appengine/docs/go/gettingstarted/usingdatastore
 

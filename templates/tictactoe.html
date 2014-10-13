@@ -3,13 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <title>TicTacToe</title>
-    <script type="text/javascript" src="/js/tictactoe.js"></script>
+    <script type="text/javascript" src="/js/tictactoe_base.js"></script>
     <link rel="stylesheet" href="/css/tictactoe.css" />
+    <script type="text/javascript" src="/js/tictactoe_render.js"></script>
   </head>
   <body>
     <div id="content">
+
       <div id="signin">
-        <a href="#" onclick="google.devrel.samples.ttt.auth();" id="signinButton">Sign in!</a>
+        <div id="signinStatusContainer">
+          <!-- Need an extra container since G+ overrides CSS on the actual button -->
+          <div id="signinButtonContainer" class="visible">
+            <div id="signinButton"></div>
+          </div>
+          <a href="#" onclick="google.devrel.samples.ttt.signout();" id="signedInStatus">Sign Out</a>
+        </div>
         <span id="userLabel">(not signed in)</span>
       </div>
       <div id="warning">
@@ -41,12 +49,6 @@
         <h2>Recent Games</h2>
         <ul id="gameHistory"></ul>
       </div>
-      <script type="text/javascript">
-        function init() {
-          google.devrel.samples.ttt.init('//' + window.location.host + '/_ah/api');
-        }
-      </script>
-      <script src="https://apis.google.com/js/client.js?onload=init"></script>
     </div>
   </body>
 </html>

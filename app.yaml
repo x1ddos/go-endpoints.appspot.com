@@ -1,5 +1,5 @@
 application: go-endpoints
-version: v1
+version: use-version-args
 threadsafe: true
 
 runtime: go
